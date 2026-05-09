@@ -1,16 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import Door from '../components/Door';
 import PillButton from '../components/PillButton';
 
 const Ifykyk = () => {
   const navigate = useNavigate();
 
-  const handleDoorClick = (id) => {
-    const urlId = id.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-');
-    navigate(`/memory/${urlId}`);
-  };
+
 
   const doors = [
     { title: 'August 18 2018' },
@@ -33,15 +29,20 @@ const Ifykyk = () => {
         IFYKYK
       </motion.h1>
 
-      <div className="flex flex-wrap justify-center gap-12 max-w-6xl w-full mb-16">
+      <div className="flex flex-col items-center gap-12 max-w-4xl w-full mb-16">
         {doors.map((door, index) => (
           <motion.div 
             key={door.title}
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 + 0.3, duration: 0.8 }}
+            initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: index * 0.3 + 0.3, duration: 0.8 }}
+            className="w-full p-8 rounded-2xl bg-theme-greenGlow/5 border-2 border-theme-greenGlow/20 backdrop-blur-sm relative overflow-hidden group hover:border-theme-greenGlow/40 transition-all cursor-default"
           >
-            <Door id={door.title} onClick={handleDoorClick} />
+            <div className="absolute top-0 left-0 w-2 h-full bg-theme-greenGlow/20 group-hover:bg-theme-greenGlow/40 transition-colors" />
+            <h3 className="text-2xl md:text-4xl text-theme-greenGlow font-matrix drop-shadow-[0_0_8px_rgba(125,160,38,0.4)]">
+              {door.title}
+            </h3>
+            <div className="mt-4 w-24 h-1 bg-theme-greenGlow/20 group-hover:w-full transition-all duration-700" />
           </motion.div>
         ))}
       </div>

@@ -112,7 +112,7 @@ const Finale = () => {
         transition={{ delay: 1.5 }}
         className="mt-8 text-xl md:text-2xl text-theme-greenGlow/60 font-matrix text-center"
       >
-        A Celebration worthy of the Chosen One.
+        A Celebration worthy of the Mother of Dragons!
       </motion.p>
 
       <motion.div

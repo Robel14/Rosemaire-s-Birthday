@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import PillButton from '../components/PillButton';
-import { Plus, X } from 'lucide-react';
+import { Plus, X, Video, FileText, Download } from 'lucide-react';
 
 const Memory = () => {
   const { id } = useParams();
@@ -106,11 +106,31 @@ const Memory = () => {
     files.forEach(file => {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setLocalUploads(prev => [...prev, reader.result]);
+        setLocalUploads(prev => [...prev, {
+          data: reader.result,
+          type: file.type,
+          name: file.name
+        }]);
       };
       reader.readAsDataURL(file);
     });
   };
+
+  const getFileType = (item) => {
+    if (typeof item === 'string') {
+      const lower = item.toLowerCase();
+      if (lower.match(/\.(jpg|jpeg|png|gif|webp)$/) || item.startsWith('data:image/')) return 'image';
+      if (lower.match(/\.(mp4|webm|ogg)$/) || item.startsWith('data:video/')) return 'video';
+      return 'image'; // Default for static paths
+    }
+    if (item.type?.startsWith('image/')) return 'image';
+    if (item.type?.startsWith('video/')) return 'video';
+    return 'file';
+  };
+
+  const getFileUrl = (item) => typeof item === 'string' ? item : item.data;
+  const getFileName = (item) => typeof item === 'string' ? item.split('/').pop() : item.name;
+
 
   const triggerUpload = () => {
     fileInputRef.current.click();
@@ -127,7 +147,7 @@ const Memory = () => {
         type="file" 
         ref={fileInputRef} 
         className="hidden" 
-        accept="image/*" 
+        accept="image/*,video/*,.pdf,.doc,.docx,.txt" 
         multiple
         onChange={handleFileUpload}
       />
@@ -149,33 +169,64 @@ const Memory = () => {
             className="flex items-center gap-3 px-8 py-4 bg-theme-greenGlow/10 border-2 border-theme-greenGlow/30 text-theme-greenGlow rounded-full font-matrix hover:bg-theme-greenGlow/20 transition-all group"
           >
             <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
-            Add Pictures
+            Add File
           </motion.button>
         </div>
 
         {allImages.length > 0 ? (
           <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8 mb-16">
-            {allImages.map((src, index) => (
-              <motion.div
-                key={index}
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
-                onClick={() => setSelectedIndex(index)}
-                className="relative group overflow-hidden rounded-2xl border-2 border-theme-greenGlow/30 break-inside-avoid cursor-pointer"
-              >
-                <img 
-                  src={src} 
-                  alt={`${memoryTitle} ${index + 1}`} 
-                  className="w-full h-auto object-contain transition-all duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-theme-greenGlow/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                
-                {/* Decorative corner accents */}
-                <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-theme-greenGlow opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-theme-greenGlow opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              </motion.div>
-            ))}
+            {allImages.map((item, index) => {
+              const type = getFileType(item);
+              const url = getFileUrl(item);
+              const name = getFileName(item);
+              
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: index * 0.1, duration: 0.6 }}
+                  onClick={() => setSelectedIndex(index)}
+                  className="relative group overflow-hidden rounded-2xl border-2 border-theme-greenGlow/30 break-inside-avoid cursor-pointer bg-black/20"
+                >
+                  {type === 'image' ? (
+                    <img 
+                      src={url} 
+                      alt={name} 
+                      className="w-full h-auto object-contain transition-all duration-500 group-hover:scale-105"
+                    />
+                  ) : type === 'video' ? (
+                    <div className="relative">
+                      <video 
+                        src={url} 
+                        className="w-full h-auto object-contain"
+                        muted
+                        loop
+                        playsInline
+                        onMouseOver={(e) => e.target.play()}
+                        onMouseOut={(e) => { e.target.pause(); e.target.currentTime = 0; }}
+                      />
+                      <div className="absolute top-4 right-4 bg-black/60 p-2 rounded-full border border-theme-greenGlow/30">
+                        <Video className="w-5 h-5 text-theme-greenGlow" />
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="p-12 flex flex-col items-center justify-center gap-4 min-h-[200px]">
+                      <FileText className="w-16 h-16 text-theme-greenGlow/40" />
+                      <span className="text-theme-greenGlow/60 font-matrix text-center text-sm truncate w-full px-4">
+                        {name}
+                      </span>
+                    </div>
+                  )}
+                  
+                  <div className="absolute inset-0 bg-theme-greenGlow/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                  
+                  {/* Decorative corner accents */}
+                  <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-theme-greenGlow opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-theme-greenGlow opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </motion.div>
+              );
+            })}
           </div>
         ) : (
           <motion.div 
@@ -236,17 +287,61 @@ const Memory = () => {
               </svg>
             </button>
 
-            <motion.img
-              key={selectedIndex}
-              initial={{ x: 300, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: -300, opacity: 0 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              src={allImages[selectedIndex]}
-              alt="Full screen view"
-              className="max-w-full max-h-full object-contain rounded-lg shadow-[0_0_50px_rgba(125,160,38,0.3)]"
-              onClick={(e) => e.stopPropagation()}
-            />
+            {selectedIndex !== null && (() => {
+              const item = allImages[selectedIndex];
+              const type = getFileType(item);
+              const url = getFileUrl(item);
+              const name = getFileName(item);
+
+              return (
+                <div className="relative w-full h-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+                  {type === 'image' ? (
+                    <motion.img
+                      key={`img-${selectedIndex}`}
+                      initial={{ scale: 0.9, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0.9, opacity: 0 }}
+                      src={url}
+                      alt={name}
+                      className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-[0_0_50px_rgba(125,160,38,0.3)]"
+                    />
+                  ) : type === 'video' ? (
+                    <motion.video
+                      key={`vid-${selectedIndex}`}
+                      initial={{ scale: 0.9, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0.9, opacity: 0 }}
+                      src={url}
+                      controls
+                      autoPlay
+                      className="max-w-full max-h-[80vh] rounded-lg shadow-[0_0_50px_rgba(125,160,38,0.3)]"
+                    />
+                  ) : (
+                    <motion.div
+                      key={`file-${selectedIndex}`}
+                      initial={{ scale: 0.9, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0.9, opacity: 0 }}
+                      className="bg-theme-greenGlow/5 border-2 border-theme-greenGlow/20 p-12 rounded-3xl backdrop-blur-xl flex flex-col items-center gap-8 max-w-lg w-full"
+                    >
+                      <FileText className="w-32 h-32 text-theme-greenGlow/40" />
+                      <div className="text-center">
+                        <h3 className="text-2xl text-theme-greenGlow font-matrix mb-2">{name}</h3>
+                        <p className="text-theme-greenGlow/40 text-sm mb-8">File storage in browser limited to this session</p>
+                        <a 
+                          href={url} 
+                          download={name}
+                          className="inline-flex items-center gap-3 px-8 py-4 bg-theme-greenGlow text-black rounded-full font-bold hover:bg-theme-greenGlow/80 transition-all"
+                        >
+                          <Download className="w-5 h-5" />
+                          Download File
+                        </a>
+                      </div>
+                    </motion.div>
+                  )}
+                </div>
+              );
+            })()}
           </motion.div>
         )}
       </AnimatePresence>
