@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  --color-theme-red: #8a0303;
+  --color-theme-redGlow: #ff1a1a;
+  --color-theme-green: #4b5320;
+  --color-theme-greenGlow: #7da026;
+  --color-theme-dark: #0a0a0a;
+  --font-sans: "Inter", sans-serif;
+  --font-matrix: "Inter", sans-serif;
+}
+
+body {
+  background-color: var(--color-black);
+  color: var(--color-theme-green);
+  font-family: var(--font-sans);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: var(--color-theme-green);
+  color: var(--color-black);
+}
