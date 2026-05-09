@@ -22,7 +22,6 @@ const TheFirsts = () => {
     { title: 'nights out' },
     { title: 'Fictions' },
     { title: 'hair color' },
-    { title: 'tiktoker era' },
   ];
 
 

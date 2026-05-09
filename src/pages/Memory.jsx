@@ -107,7 +107,10 @@ const Memory = () => {
     },
     "nights-out": {
         "path": "/memories/nights-out/",
-        "files": []
+        "files": [
+            "photo_5_2026-05-09_11-48-32.jpg",
+            "photo_6_2026-05-09_11-48-32.jpg"
+        ]
     },
     "oldie-but-goldie": {
         "path": "/memories/oldie-but-goldie/",
