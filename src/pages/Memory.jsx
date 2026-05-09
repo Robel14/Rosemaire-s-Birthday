@@ -70,7 +70,10 @@ const Memory = () => {
   const memoryData = {
     "aloha": {
         "path": "/memories/aloha/",
-        "files": []
+        "files": [
+            "photo_1_2026-05-09_23-40-03.jpg",
+            "photo_2_2026-05-09_23-40-03.jpg"
+        ]
     },
     "august-18-2018": {
         "path": "/memories/august-18-2018/",
@@ -108,11 +111,31 @@ const Memory = () => {
     },
     "oldie-but-goldie": {
         "path": "/memories/oldie-but-goldie/",
-        "files": []
+        "files": [
+            "photo_10_2026-05-09_23-43-54.jpg",
+            "photo_11_2026-05-09_23-43-54.jpg",
+            "photo_12_2026-05-09_23-43-54.jpg",
+            "photo_13_2026-05-09_23-43-54.jpg",
+            "photo_14_2026-05-09_23-43-54.jpg",
+            "photo_15_2026-05-09_23-43-54.jpg",
+            "photo_16_2026-05-09_23-43-54.jpg",
+            "photo_17_2026-05-09_23-43-54.jpg",
+            "photo_18_2026-05-09_23-43-54.jpg",
+            "photo_3_2026-05-09_23-43-54.jpg",
+            "photo_4_2026-05-09_23-43-54.jpg",
+            "photo_5_2026-05-09_23-43-54.jpg",
+            "photo_6_2026-05-09_23-43-54.jpg",
+            "photo_7_2026-05-09_23-43-54.jpg",
+            "photo_8_2026-05-09_23-43-54.jpg",
+            "photo_9_2026-05-09_23-43-54.jpg"
+        ]
     },
     "rule-23": {
         "path": "/memories/rule-23/",
-        "files": []
+        "files": [
+            "photo_1_2026-05-09_23-43-54.jpg",
+            "photo_2_2026-05-09_23-43-54.jpg"
+        ]
     },
     "tiktoker-era": {
         "path": "/memories/tiktoker-era/",
