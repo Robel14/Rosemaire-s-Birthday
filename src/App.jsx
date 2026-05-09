@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Watcher from './pages/Watcher';
 import Hallway from './pages/Hallway';
 import TheFirsts from './pages/TheFirsts';
+import Ifykyk from './pages/Ifykyk';
 import Memory from './pages/Memory';
 import Finale from './pages/Finale';
 import './App.css'; // Keep standard vite styles if needed, though mostly using tailwind
@@ -20,12 +21,14 @@ const AnimatedRoutes = () => {
         <Route path="/watcher" element={<Watcher />} />
         <Route path="/hallway" element={<Hallway />} />
         <Route path="/the-firsts" element={<TheFirsts />} />
+        <Route path="/ifykyk" element={<Ifykyk />} />
         <Route path="/memory/:id" element={<Memory />} />
         <Route path="/finale" element={<Finale />} />
       </Routes>
     </AnimatePresence>
   );
 };
+
 
 
 

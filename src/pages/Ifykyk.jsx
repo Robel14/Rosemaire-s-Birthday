@@ -4,26 +4,18 @@ import { motion } from 'framer-motion';
 import Door from '../components/Door';
 import PillButton from '../components/PillButton';
 
-const TheFirsts = () => {
+const Ifykyk = () => {
   const navigate = useNavigate();
 
   const handleDoorClick = (id) => {
     const urlId = id.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-');
-    if (urlId === 'ifykyk') {
-      navigate('/ifykyk');
-    } else {
-      navigate(`/memory/${urlId}`);
-    }
+    navigate(`/memory/${urlId}`);
   };
 
   const doors = [
-    { title: 'IFYKYK' },
-    { title: 'House visits' },
-    { title: 'nights out' },
-    { title: 'Fictions' },
-    { title: 'hair color' },
+    { title: 'August 18 2018' },
+    { title: 'December 24 2024' },
   ];
-
 
   return (
     <motion.div 
@@ -38,7 +30,7 @@ const TheFirsts = () => {
         animate={{ y: 0, opacity: 1 }}
         className="text-4xl md:text-6xl text-theme-greenGlow font-matrix mb-16 drop-shadow-[0_0_15px_rgba(125,160,38,0.6)]"
       >
-        The Firsts
+        IFYKYK
       </motion.h1>
 
       <div className="flex flex-wrap justify-center gap-12 max-w-6xl w-full mb-16">
@@ -60,8 +52,8 @@ const TheFirsts = () => {
         transition={{ delay: 0.8, duration: 0.8 }}
         className="flex flex-col sm:flex-row gap-6"
       >
-        <PillButton color="green" onClick={() => navigate('/hallway')}>
-          Back to Hallway
+        <PillButton color="green" onClick={() => navigate('/the-firsts')}>
+          Back to The Firsts
         </PillButton>
         <PillButton color="red" onClick={() => navigate('/')}>
           Return Home
@@ -71,4 +63,4 @@ const TheFirsts = () => {
   );
 };
 
-export default TheFirsts;
+export default Ifykyk;
