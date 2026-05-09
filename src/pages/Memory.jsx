@@ -69,12 +69,27 @@ const Memory = () => {
   
   const memoryData = {
     'house-visits': { count: 4, path: '/memories/house-visits/' },
+    'nights-out': { count: 0, path: '/memories/nights-out/' },
+    'fictions': { count: 0, path: '/memories/fictions/' },
+    'hair-color': { count: 0, path: '/memories/hair-color/' },
+    'tiktoker-era': { 
+      path: '/memories/tiktoker-era/', 
+      // Add the exact filenames of your videos here:
+      files: ['1.mp4', '2.mp4', '3.mp4', '4.mp4', '5.mp4'] 
+    },
+    'august-18-2018': { count: 0, path: '/memories/august-18-2018/' },
+    'december-24-2024': { count: 0, path: '/memories/december-24-2024/' },
   };
 
   const currentMemory = memoryData[id];
-  const staticImages = currentMemory 
-    ? Array.from({ length: currentMemory.count }, (_, i) => `${currentMemory.path}${i + 1}.jpg`)
-    : [];
+  let staticImages = [];
+  if (currentMemory) {
+    if (currentMemory.files) {
+      staticImages = currentMemory.files.map(file => `${currentMemory.path}${file}`);
+    } else {
+      staticImages = Array.from({ length: currentMemory.count || 0 }, (_, i) => `${currentMemory.path}${i + 1}.jpg`);
+    }
+  }
 
   const allImages = [...staticImages, ...localUploads];
 
