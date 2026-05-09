@@ -68,18 +68,61 @@ const Memory = () => {
   const memoryTitle = id.replace(/-/g, ' ');
   
   const memoryData = {
-    'house-visits': { count: 4, path: '/memories/house-visits/' },
-    'nights-out': { count: 0, path: '/memories/nights-out/' },
-    'fictions': { count: 0, path: '/memories/fictions/' },
-    'hair-color': { count: 0, path: '/memories/hair-color/' },
-    'tiktoker-era': { 
-      path: '/memories/tiktoker-era/', 
-      // Add the exact filenames of your videos here:
-      files: ['1.mp4', '2.mp4', '3.mp4', '4.mp4', '5.mp4'] 
+    "aloha": {
+        "path": "/memories/aloha/",
+        "files": []
     },
-    'august-18-2018': { count: 0, path: '/memories/august-18-2018/' },
-    'december-24-2024': { count: 0, path: '/memories/december-24-2024/' },
-  };
+    "august-18-2018": {
+        "path": "/memories/august-18-2018/",
+        "files": []
+    },
+    "december-24-2024": {
+        "path": "/memories/december-24-2024/",
+        "files": []
+    },
+    "fictions": {
+        "path": "/memories/fictions/",
+        "files": [
+            "1.jpg.jpg"
+        ]
+    },
+    "hair-color": {
+        "path": "/memories/hair-color/",
+        "files": [
+            "1.jpg.jpg",
+            "2.jpg.jpg"
+        ]
+    },
+    "house-visits": {
+        "path": "/memories/house-visits/",
+        "files": [
+            "1.jpg",
+            "2.jpg",
+            "3.jpg",
+            "4.jpg"
+        ]
+    },
+    "nights-out": {
+        "path": "/memories/nights-out/",
+        "files": []
+    },
+    "oldie-but-goldie": {
+        "path": "/memories/oldie-but-goldie/",
+        "files": []
+    },
+    "rule-23": {
+        "path": "/memories/rule-23/",
+        "files": []
+    },
+    "tiktoker-era": {
+        "path": "/memories/tiktoker-era/",
+        "files": [
+            "1.mp4",
+            "2.mp4",
+            "3.mp4"
+        ]
+    }
+};
 
   const currentMemory = memoryData[id];
   let staticImages = [];
